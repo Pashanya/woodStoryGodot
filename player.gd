@@ -17,7 +17,7 @@ var is_can_climbing
 
 var scale_min = 0.75
 var scale_max = 1.25
-var scale_decay = 0.2
+var scale_decay = 0.1
 
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -42,7 +42,7 @@ func _physics_process(delta):
 	position = Vector2(round(position.x), round(position.y))
 
 func apply_gravity(delta):
-	if not is_on_floor() and velocity.y <= 0:
+	if !is_on_floor() and velocity.y <= 0:
 		velocity.y += gravity * delta
 	elif velocity.y > 0 and velocity.y < max_fall_velocity:
 		velocity.y += gravity * movement_data.fall_multiplier * delta;
@@ -55,8 +55,8 @@ func handle_jump():
 				is_can_climbing = false
 				ledge_grab_timer.start()
 			velocity.y = movement_data.jump_velocity
-			animated_sprite_2d.scale.x = scale_min * 1.5
-			animated_sprite_2d.scale.y = scale_max * 1.5
+			animated_sprite_2d.scale.x = scale_min
+			animated_sprite_2d.scale.y = scale_max
 			is_jumping = true
 
 func  jump_process(delta):
@@ -80,7 +80,7 @@ func wall_check():
 	if wall_climb_check.is_colliding():
 		var collider = wall_climb_check.get_collider()
 		if collider is TileMap:
-			if (not empty_climb_check.is_colliding() or not empty_climb_check.get_collider() is TileMap) and not is_can_climbing and ledge_grab_timer.time_left == 0.0 and is_on_wall_only():
+			if (!empty_climb_check.is_colliding() or !empty_climb_check.get_collider() is TileMap) and !is_can_climbing and ledge_grab_timer.time_left == 0.0 and is_on_wall_only():
 				print("Можно прилепиться")
 				is_can_climbing = true  
 
@@ -97,9 +97,25 @@ func update_animation(input_axis):
 	animated_sprite_2d.scale.x = lerp(animated_sprite_2d.scale.x, 1.0, scale_decay)
 	animated_sprite_2d.scale.y = lerp(animated_sprite_2d.scale.y, 1.0, scale_decay)
 	
-	print(str(animated_sprite_2d.scale.x) + " " + str(animated_sprite_2d.scale.y))
+	if !is_can_climbing:
+		if input_axis < 0:
+			player_root_for_flip.scale.x = -1
+		if input_axis > 0:
+			player_root_for_flip.scale.x = 1
 	
-	if input_axis < 0:
-		player_root_for_flip.scale.x = -1
-	if input_axis > 0:
-		player_root_for_flip.scale.x = 1
+	if input_axis != 0:
+		animated_sprite_2d.play("run")
+	else:
+		animated_sprite_2d.play("idle")
+		
+	if !is_on_floor():
+		animated_sprite_2d.play("jump")
+		if velocity.y < 0:
+			animated_sprite_2d.frame = 0
+		else: 
+			animated_sprite_2d.frame = 1
+		
+	if is_can_climbing:
+		animated_sprite_2d.scale.x = lerp(animated_sprite_2d.scale.x, 1.0, scale_decay * 3)
+		animated_sprite_2d.scale.y = lerp(animated_sprite_2d.scale.y, 1.0, scale_decay * 3)
+		animated_sprite_2d.play("grab")
