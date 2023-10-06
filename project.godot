@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Wood Story Godot"
-run/main_scene="res://level_01.tscn"
+run/main_scene="res://worldView.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -23,15 +23,18 @@ window/size/mode=3
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
-window/per_pixel_transparency/allowed=true
 
 [dotnet]
 
 project/assembly_name="Wood Story Godot"
 
+[editor]
+
+naming/scene_name_casing=1
+
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/smoothing/plugin.cfg")
+enabled=PackedStringArray()
 
 [gui]
 
@@ -79,9 +82,14 @@ jump={
 ]
 }
 
+[physics]
+
+2d/default_gravity=1200.0
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="forward_plus"
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true

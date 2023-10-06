@@ -1,68 +1,98 @@
-[gd_scene load_steps=12 format=3 uid="uid://bmqapuoptvyp3"]
+[gd_scene load_steps=11 format=3 uid="uid://fg6v530sp5fy"]
 
-[ext_resource type="PackedScene" uid="uid://cy6im5585dkf5" path="res://Prefab/character_prefab.tscn" id="1_xfv3d"]
-[ext_resource type="Texture2D" uid="uid://2dq7hm11qtf2" path="res://mushroom-Sheet.png" id="2_1r32c"]
-[ext_resource type="Script" path="res://player.gd" id="2_f37fh"]
-[ext_resource type="Shader" path="res://player.gdshader" id="3_uxdqp"]
-[ext_resource type="Texture2D" uid="uid://cp2gg7maotkxp" path="res://Sprite-0001.png" id="6_sog4p"]
+[ext_resource type="Script" path="res://Player.gd" id="1_83yg4"]
+[ext_resource type="Resource" uid="uid://ilfma45pftx4" path="res://DefaultMovementData.tres" id="2_d4ihi"]
+[ext_resource type="Texture2D" uid="uid://2dq7hm11qtf2" path="res://Sprites/mushroom-Sheet.png" id="3_te8yp"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_50l3e"]
-shader = ExtResource("3_uxdqp")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_skulm"]
+size = Vector2(16, 28)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ocetu"]
-atlas = ExtResource("2_1r32c")
+[sub_resource type="GDScript" id="GDScript_orovw"]
+script/source = "extends Camera2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6uxp5"]
+atlas = ExtResource("3_te8yp")
 region = Rect2(0, 0, 53, 33)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rqg80"]
-atlas = ExtResource("2_1r32c")
+[sub_resource type="AtlasTexture" id="AtlasTexture_mobed"]
+atlas = ExtResource("3_te8yp")
 region = Rect2(53, 0, 53, 33)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_w720d"]
-atlas = ExtResource("2_1r32c")
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6t2y"]
+atlas = ExtResource("3_te8yp")
 region = Rect2(106, 0, 53, 33)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t27gq"]
-atlas = ExtResource("2_1r32c")
+[sub_resource type="AtlasTexture" id="AtlasTexture_bk3ld"]
+atlas = ExtResource("3_te8yp")
 region = Rect2(159, 0, 53, 33)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_78sid"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_k18as"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ocetu")
+"texture": SubResource("AtlasTexture_6uxp5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rqg80")
+"texture": SubResource("AtlasTexture_mobed")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w720d")
+"texture": SubResource("AtlasTexture_c6t2y")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t27gq")
+"texture": SubResource("AtlasTexture_bk3ld")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"default",
 "speed": 5.0
 }]
 
-[node name="Player" instance=ExtResource("1_xfv3d")]
-script = ExtResource("2_f37fh")
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(4, 0)
+script = ExtResource("1_83yg4")
+movement_data = ExtResource("2_d4ihi")
 
-[node name="CollisionShape2D" parent="." index="0"]
-position = Vector2(13, -13)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(11, -14)
+shape = SubResource("RectangleShape2D_skulm")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="1"]
-material = SubResource("ShaderMaterial_50l3e")
-position = Vector2(27, -16)
-sprite_frames = SubResource("SpriteFrames_78sid")
-animation = &"idle"
-metadata/_edit_lock_ = true
-
-[node name="Camera2D" type="Camera2D" parent="." index="2"]
-position = Vector2(12, -11)
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
+script = SubResource("GDScript_orovw")
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="3"]
-position = Vector2(12, -11)
-texture = ExtResource("6_sog4p")
+[node name="CoyoteJumpTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="LedgeGrabTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="PlayerRootForFlip" type="Node2D" parent="."]
+position = Vector2(11, -14)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PlayerRootForFlip"]
+position = Vector2(15.5, -1.5)
+sprite_frames = SubResource("SpriteFrames_k18as")
+
+[node name="WallClimbCheck" type="RayCast2D" parent="PlayerRootForFlip"]
+unique_name_in_owner = true
+position = Vector2(0.5, -1.5)
+target_position = Vector2(12, 0)
+
+[node name="EmptyClimbCheck" type="RayCast2D" parent="PlayerRootForFlip"]
+unique_name_in_owner = true
+position = Vector2(1.5, -14.5)
+target_position = Vector2(20, 0)

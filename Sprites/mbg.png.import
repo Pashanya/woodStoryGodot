@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4lak43wfqf2d"
-path="res://.godot/imported/tswood.png-fad1141b6a6e2fd9d2e6f02e42d8cde9.ctex"
+uid="uid://bevwj7rumec0c"
+path="res://.godot/imported/mbg.png-acfa726d67365703968cec200db7e9fb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tswood.png"
-dest_files=["res://.godot/imported/tswood.png-fad1141b6a6e2fd9d2e6f02e42d8cde9.ctex"]
+source_file="res://Sprites/mbg.png"
+dest_files=["res://.godot/imported/mbg.png-acfa726d67365703968cec200db7e9fb.ctex"]
 
 [params]
 

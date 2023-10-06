@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2dq7hm11qtf2"
-path="res://.godot/imported/mushroom-Sheet.png-8d6cb7a060ae574cc761b39fabe69b11.ctex"
+uid="uid://c4lak43wfqf2d"
+path="res://.godot/imported/tswood.png-c07ec04c6ff771a47de509b24551d789.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mushroom-Sheet.png"
-dest_files=["res://.godot/imported/mushroom-Sheet.png-8d6cb7a060ae574cc761b39fabe69b11.ctex"]
+source_file="res://Sprites/tswood.png"
+dest_files=["res://.godot/imported/tswood.png-c07ec04c6ff771a47de509b24551d789.ctex"]
 
 [params]
 

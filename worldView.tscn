@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://jt0pncok22yj"]
+
+[ext_resource type="PackedScene" uid="uid://b5irf3fqgb5t8" path="res://level.tscn" id="1_048hg"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nnvcu"]
+viewport_path = NodePath("SubViewportContainer/SubViewport")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+custom_minimum_size = Vector2(480, 270)
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(4, 4)
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+vrs_texture = SubResource("ViewportTexture_nnvcu")
+canvas_item_default_texture_filter = 0
+size = Vector2i(480, 270)
+render_target_update_mode = 4
+
+[node name="Level" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_048hg")]
