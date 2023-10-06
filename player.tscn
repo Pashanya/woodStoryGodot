@@ -1,0 +1,68 @@
+[gd_scene load_steps=12 format=3 uid="uid://bmqapuoptvyp3"]
+
+[ext_resource type="PackedScene" uid="uid://cy6im5585dkf5" path="res://Prefab/character_prefab.tscn" id="1_xfv3d"]
+[ext_resource type="Texture2D" uid="uid://2dq7hm11qtf2" path="res://mushroom-Sheet.png" id="2_1r32c"]
+[ext_resource type="Script" path="res://player.gd" id="2_f37fh"]
+[ext_resource type="Shader" path="res://player.gdshader" id="3_uxdqp"]
+[ext_resource type="Texture2D" uid="uid://cp2gg7maotkxp" path="res://Sprite-0001.png" id="6_sog4p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_50l3e"]
+shader = ExtResource("3_uxdqp")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocetu"]
+atlas = ExtResource("2_1r32c")
+region = Rect2(0, 0, 53, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqg80"]
+atlas = ExtResource("2_1r32c")
+region = Rect2(53, 0, 53, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w720d"]
+atlas = ExtResource("2_1r32c")
+region = Rect2(106, 0, 53, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t27gq"]
+atlas = ExtResource("2_1r32c")
+region = Rect2(159, 0, 53, 33)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_78sid"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ocetu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqg80")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w720d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t27gq")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Player" instance=ExtResource("1_xfv3d")]
+script = ExtResource("2_f37fh")
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(13, -13)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="1"]
+material = SubResource("ShaderMaterial_50l3e")
+position = Vector2(27, -16)
+sprite_frames = SubResource("SpriteFrames_78sid")
+animation = &"idle"
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="." index="2"]
+position = Vector2(12, -11)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="3"]
+position = Vector2(12, -11)
+texture = ExtResource("6_sog4p")

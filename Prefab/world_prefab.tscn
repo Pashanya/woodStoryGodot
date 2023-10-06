@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckh4trhnay7a1"]
+
+[ext_resource type="PackedScene" uid="uid://c3dl44t48y4wp" path="res://node_2d.tscn" id="1_cj07f"]
+
+[node name="WorldPrefab" type="Node2D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+custom_minimum_size = Vector2(480, 270)
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(4, 4)
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(480, 270)
+render_target_update_mode = 4
+
+[node name="Node2D" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_cj07f")]
