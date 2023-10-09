@@ -1,28 +1,18 @@
-[gd_scene load_steps=24 format=3 uid="uid://fg6v530sp5fy"]
+[gd_scene load_steps=27 format=3 uid="uid://fg6v530sp5fy"]
 
-[ext_resource type="Script" path="res://Player.gd" id="1_83yg4"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_ahoae"]
 [ext_resource type="Resource" uid="uid://ilfma45pftx4" path="res://DefaultMovementData.tres" id="2_d4ihi"]
 [ext_resource type="Texture2D" uid="uid://8aovicuddnio" path="res://Sprites/grab.png" id="3_olu7i"]
 [ext_resource type="Texture2D" uid="uid://2dq7hm11qtf2" path="res://Sprites/mushroom-Sheet.png" id="3_te8yp"]
 [ext_resource type="Texture2D" uid="uid://chjp8ijdc80ml" path="res://Sprites/jump-Sheet.png" id="4_p6l4u"]
 [ext_resource type="Texture2D" uid="uid://b6rkiawbekwxf" path="res://Sprites/newwalk-Sheet.png" id="5_avj5r"]
+[ext_resource type="Texture2D" uid="uid://coiv7otfd86ej" path="res://Sprites/hpbar.png" id="7_bpy50"]
+[ext_resource type="Script" path="res://Scripts/HealthBar.gd" id="7_oaxbt"]
+[ext_resource type="Texture2D" uid="uid://b30jckexy5pqs" path="res://Sprites/healthbar2.png" id="8_7tj4h"]
+[ext_resource type="Texture2D" uid="uid://bou2f8vf0cbor" path="res://Sprites/healthbar.png" id="9_ssgel"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_skulm"]
 size = Vector2(16, 28)
-
-[sub_resource type="GDScript" id="GDScript_orovw"]
-script/source = "extends Camera2D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6uxp5"]
 atlas = ExtResource("3_te8yp")
@@ -151,7 +141,9 @@ animations = [{
 [node name="Player" type="CharacterBody2D"]
 y_sort_enabled = true
 position = Vector2(4, 0)
-script = ExtResource("1_83yg4")
+floor_snap_length = 10.0
+platform_on_leave = 2
+script = ExtResource("1_ahoae")
 movement_data = ExtResource("2_d4ihi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -162,7 +154,6 @@ shape = SubResource("RectangleShape2D_skulm")
 position = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
-script = SubResource("GDScript_orovw")
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
 wait_time = 0.1
@@ -190,3 +181,57 @@ target_position = Vector2(12, 0)
 unique_name_in_owner = true
 position = Vector2(1.5, -14.5)
 target_position = Vector2(20, 0)
+
+[node name="WallStuckCheck" type="RayCast2D" parent="PlayerRootForFlip"]
+unique_name_in_owner = true
+position = Vector2(2, 13)
+target_position = Vector2(0, 8)
+
+[node name="EmptyStuckCheck" type="RayCast2D" parent="PlayerRootForFlip"]
+unique_name_in_owner = true
+position = Vector2(8, 13)
+target_position = Vector2(0, 8)
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="HealthBarRoot" type="Node2D" parent="GUI"]
+position = Vector2(35, 25)
+script = ExtResource("7_oaxbt")
+
+[node name="HealthBar2" type="TextureProgressBar" parent="GUI/HealthBarRoot"]
+offset_top = -1.0
+offset_right = 81.0
+offset_bottom = 11.0
+step = 0.1
+value = 58.0
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("8_7tj4h")
+texture_progress = ExtResource("8_7tj4h")
+tint_under = Color(1, 0.301961, 0.0509804, 1)
+tint_over = Color(0, 0, 0, 0.407843)
+
+[node name="HealthBar" type="TextureProgressBar" parent="GUI/HealthBarRoot"]
+offset_top = -1.0
+offset_right = 81.0
+offset_bottom = 11.0
+step = 0.1
+value = 13.0
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("8_7tj4h")
+texture_over = ExtResource("9_ssgel")
+texture_progress = ExtResource("8_7tj4h")
+tint_under = Color(0.152941, 0.152941, 0.152941, 0)
+tint_over = Color(0, 0, 0, 0.45098)
+tint_progress = Color(0.756863, 1, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="GUI/HealthBarRoot"]
+position = Vector2(26, 4)
+texture = ExtResource("7_bpy50")

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bibg1oxvekk2d"]
+
+[ext_resource type="Texture2D" uid="uid://b30jckexy5pqs" path="res://Sprites/healthbar2.png" id="1_bdv82"]
+[ext_resource type="Texture2D" uid="uid://bou2f8vf0cbor" path="res://Sprites/healthbar.png" id="2_k88xy"]
+[ext_resource type="Texture2D" uid="uid://coiv7otfd86ej" path="res://Sprites/hpbar.png" id="3_hode4"]
+
+[node name="HealtBar" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(26, 4)
+texture = ExtResource("3_hode4")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_right = 81.0
+offset_bottom = 11.0
+max_value = 10.0
+value = 5.0
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("1_bdv82")
+texture_over = ExtResource("2_k88xy")
+texture_progress = ExtResource("1_bdv82")
+tint_under = Color(1, 0.301961, 0.0509804, 1)
+tint_over = Color(0, 0, 0, 0.407843)
+tint_progress = Color(0.756863, 1, 0, 1)
